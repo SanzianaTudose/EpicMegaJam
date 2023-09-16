@@ -23,7 +23,9 @@ private:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	void SetNewTarget(AActor* Target);
+	// Movement Methods
+	// {TargetDirection}: 0 - Left 1 - Right
+	void SetNewTarget(AActor* Target, bool TargetDirection);
 	void MoveToTarget(float DeltaTime);
 
 	// Movement Variables
@@ -34,6 +36,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float MoveSpeed = 100.f;
 
+	bool CurrentTargetDirection; // 0 - Left 1 - Right
 	AActor* CurrentTarget;
 	FVector Direction;
 	float TotalDistance;

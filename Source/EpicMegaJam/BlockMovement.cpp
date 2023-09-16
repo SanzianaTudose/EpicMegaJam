@@ -18,20 +18,28 @@ void UBlockMovement::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("UBlockMovement target variables are null"));
 
 	// Sets the first target to left
-	SetNewTarget(LeftTarget);
+	SetNewTarget(LeftTarget, 0);
 }
-
 
 void UBlockMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	MoveToTarget(DeltaTime);
+
+	if (CurrentDistance >= TotalDistance)
+	{
+		if (CurrentTargetDirection)
+			SetNewTarget(LeftTarget, 0);
+		else
+			SetNewTarget(RightTarget, 1);
+	}
 }
 
-void UBlockMovement::SetNewTarget(AActor* Target)
+void UBlockMovement::SetNewTarget(AActor* Target, bool TargetDirection)
 {
 	CurrentTarget = Target;
+	CurrentTargetDirection = TargetDirection;
 
 	StartLocation = GetOwner()->GetActorLocation();
 	Direction = Target->GetActorLocation() - StartLocation;
@@ -49,7 +57,6 @@ void UBlockMovement::MoveToTarget(float DeltaTime)
 		UE_LOG(LogTemp, Error, TEXT("UBlockMovement: CurrentTarget variable is null."));
 		return;
 	}
-
 
 	if (CurrentDistance < TotalDistance)
 	{
