@@ -1,0 +1,27 @@
+[
+    {
+        "file": "D:\\\\My Stuff\\\\Work\\\\TUe\\\\Game Dev\\\\Projects\\\\EpicMegaJam\\\\Source\\\\EpicMegaJam\\\\EpicMegaJam.Build.cs",
+        "command": "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.33.31629\\bin\\HostX64\\x64\\cl.exe\" @\"D:\\My Stuff\\Work\\TUe\\Game Dev\\Projects\\EpicMegaJam\\.vscode\\compileCommands_Default\\EpicMegaJam.210.rsp\"",
+        "directory": "C:\\Program Files\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\My Stuff\\\\Work\\\\TUe\\\\Game Dev\\\\Projects\\\\EpicMegaJam\\\\Source\\\\EpicMegaJam\\\\EpicMegaJam.cpp",
+        "command": "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.33.31629\\bin\\HostX64\\x64\\cl.exe\" @\"D:\\My Stuff\\Work\\TUe\\Game Dev\\Projects\\EpicMegaJam\\.vscode\\compileCommands_Default\\EpicMegaJam.210.rsp\"",
+        "directory": "C:\\Program Files\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\My Stuff\\\\Work\\\\TUe\\\\Game Dev\\\\Projects\\\\EpicMegaJam\\\\Source\\\\EpicMegaJam\\\\EpicMegaJam.h",
+        "command": "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.33.31629\\bin\\HostX64\\x64\\cl.exe\" @\"D:\\My Stuff\\Work\\TUe\\Game Dev\\Projects\\EpicMegaJam\\.vscode\\compileCommands_Default\\EpicMegaJam.210.rsp\"",
+        "directory": "C:\\Program Files\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\My Stuff\\\\Work\\\\TUe\\\\Game Dev\\\\Projects\\\\EpicMegaJam\\\\Source\\\\EpicMegaJam\\\\EpicMegaJamGameModeBase.cpp",
+        "command": "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.33.31629\\bin\\HostX64\\x64\\cl.exe\" @\"D:\\My Stuff\\Work\\TUe\\Game Dev\\Projects\\EpicMegaJam\\.vscode\\compileCommands_Default\\EpicMegaJam.210.rsp\"",
+        "directory": "C:\\Program Files\\Epic Games\\UE_4.27\\Engine\\Source"
+    },
+    {
+        "file": "D:\\\\My Stuff\\\\Work\\\\TUe\\\\Game Dev\\\\Projects\\\\EpicMegaJam\\\\Source\\\\EpicMegaJam\\\\EpicMegaJamGameModeBase.h",
+        "command": "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.33.31629\\bin\\HostX64\\x64\\cl.exe\" @\"D:\\My Stuff\\Work\\TUe\\Game Dev\\Projects\\EpicMegaJam\\.vscode\\compileCommands_Default\\EpicMegaJam.210.rsp\"",
+        "directory": "C:\\Program Files\\Epic Games\\UE_4.27\\Engine\\Source"
+    }
+]
