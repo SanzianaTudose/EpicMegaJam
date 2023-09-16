@@ -14,19 +14,25 @@ void UBlockMovement::BeginPlay()
 {
 	Super::BeginPlay();
 
+	SetupPlayerInputComponent();
+
+	// Movement set-up
 	if (LeftTarget == nullptr || RightTarget == nullptr)
 		UE_LOG(LogTemp, Error, TEXT("UBlockMovement target variables are null"));
 
 	// Sets the first target to left
 	SetNewTarget(LeftTarget, 0);
+	isMoving = true;
 }
 
 void UBlockMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	MoveToTarget(DeltaTime);
+	if (isMoving)
+		MoveToTarget(DeltaTime);
 
+	// Check if CurrentTarget is reached and switch targets
 	if (CurrentDistance >= TotalDistance)
 	{
 		if (CurrentTargetDirection)
@@ -34,6 +40,14 @@ void UBlockMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 		else
 			SetNewTarget(RightTarget, 1);
 	}
+}
+
+void UBlockMovement::SetupPlayerInputComponent()
+{
+	UInputComponent* InputComponent = GetWorld()->GetFirstPlayerController()->FindComponentByClass<UInputComponent>();
+
+	if (InputComponent != nullptr)
+		InputComponent->BindAction("Stop Block", IE_Pressed, this, &UBlockMovement::StopMovement);
 }
 
 void UBlockMovement::SetNewTarget(AActor* Target, bool TargetDirection)
@@ -68,4 +82,9 @@ void UBlockMovement::MoveToTarget(float DeltaTime)
 
 		CurrentDistance = (Location - StartLocation).Size();
 	}
+}
+
+void UBlockMovement::StopMovement()
+{
+	isMoving = !isMoving;
 }

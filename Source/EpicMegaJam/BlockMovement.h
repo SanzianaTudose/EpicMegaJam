@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Components/InputComponent.h"
 #include "BlockMovement.generated.h"
-
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class EPICMEGAJAM_API UBlockMovement : public UActorComponent
@@ -23,10 +23,13 @@ private:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	void SetupPlayerInputComponent();
+
 	// Movement Methods
 	// {TargetDirection}: 0 - Left 1 - Right
 	void SetNewTarget(AActor* Target, bool TargetDirection);
 	void MoveToTarget(float DeltaTime);
+	void StopMovement(); // Called when Player interacts with block ("Spacebar" press) 
 
 	// Movement Variables
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
@@ -42,4 +45,6 @@ private:
 	float TotalDistance;
 	float CurrentDistance;
 	FVector StartLocation;
+
+	bool isMoving;
 };
