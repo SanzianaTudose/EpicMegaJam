@@ -13,10 +13,8 @@ class EPICMEGAJAM_API UBlockSpawner : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this component's properties
 	UBlockSpawner();
 
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 protected:
@@ -27,7 +25,11 @@ protected:
 
 	void OnBlockSpawnPress();
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Properties", meta = (AllowPrivateAccess = "true"));
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning Properties", meta = (AllowPrivateAccess = "true"));
 	TSubclassOf<AActor> ActorToSpawn;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning Properties", meta = (AllowPrivateAccess = "true"));
+	FTransform SpawnTransform = FTransform(FVector(0.f, 0.f, 800.f));
+
+	AActor* ActiveBlock;
 
 };

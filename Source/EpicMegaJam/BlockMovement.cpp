@@ -15,14 +15,14 @@ void UBlockMovement::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// DEBUG ONLY! 
-	DebugDraw();
-
 	SetupPlayerInputComponent();
 
+	StartLocation = GetOwner()->GetActorLocation();
 	// Sets the first target to left
-	SetNewTarget(LeftTarget, 0);
+	SetNewTarget(LeftRange, 0);
 	isMoving = true;
+
+	DebugDraw(); // DEBUG ONLY! 
 }
 
 void UBlockMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -36,9 +36,9 @@ void UBlockMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	if (CurrentDistance >= TotalDistance)
 	{
 		if (isGoingRight)
-			SetNewTarget(LeftTarget, 0);
+			SetNewTarget(LeftRange, 0);
 		else
-			SetNewTarget(RightTarget, 1);
+			SetNewTarget(RightRange, 1);
 	}
 }
 
@@ -50,12 +50,11 @@ void UBlockMovement::SetupPlayerInputComponent()
 		InputComponent->BindAction("Block Stop", IE_Pressed, this, &UBlockMovement::StopMovement);
 }
 
-void UBlockMovement::SetNewTarget(FVector TargetLocation, bool isRight)
+void UBlockMovement::SetNewTarget(float TargetRange, bool isRight)
 {
-	CurrentTarget = TargetLocation;
+	CurrentTarget = FVector(StartLocation.X, StartLocation.Y + TargetRange, StartLocation.Z);
 	isGoingRight = isRight;
 
-	StartLocation = GetOwner()->GetActorLocation();
 	Direction = CurrentTarget - StartLocation;
 	TotalDistance = Direction.Size();
 
@@ -85,6 +84,6 @@ void UBlockMovement::StopMovement()
 
 void UBlockMovement::DebugDraw()
 {
-	DrawDebugSphere(GetWorld(), LeftTarget, 10, 50, FColor::Green, true);
-	DrawDebugSphere(GetWorld(), RightTarget, 10, 50, FColor::Green, true);
+	DrawDebugSphere(GetWorld(), FVector(StartLocation.X, StartLocation.Y + LeftRange, StartLocation.Z), 10, 50, FColor::Green, true);
+	DrawDebugSphere(GetWorld(), FVector(StartLocation.X, StartLocation.Y + RightRange, StartLocation.Z), 10, 50, FColor::Green, true);
 }

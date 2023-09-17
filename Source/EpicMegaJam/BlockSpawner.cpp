@@ -37,7 +37,8 @@ void UBlockSpawner::OnBlockSpawnPress()
 		UE_LOG(LogTemp, Error, TEXT("UBlockSpawner: ActorToSpawn variable is null."));
 		return;
 	}
-	GetWorld()->SpawnActor<AActor>(ActorToSpawn, GetOwner()->GetActorTransform());
+
+	ActiveBlock = GetWorld()->SpawnActor<AActor>(ActorToSpawn, SpawnTransform);
 }
 
 

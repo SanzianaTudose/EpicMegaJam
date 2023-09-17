@@ -28,7 +28,7 @@ private:
 
 	// Movement Methods
 	// {TargetDirection}: 0 - Left 1 - Right
-	void SetNewTarget(FVector TargetLocation, bool isRight);
+	void SetNewTarget(float TargetRange, bool isRight);
 	void MoveToTarget(float DeltaTime);
 	void StopMovement(); // Called when Player interacts with block ("Spacebar" press) 
 
@@ -37,11 +37,11 @@ private:
 
 	// Movement Variables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	FVector LeftTarget = FVector(-100.f, -350.f, 0.f);;
+	float LeftRange = -350.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	FVector RightTarget = FVector(-100.f, 350.f, 0.f);
+	float RightRange = 350.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	float MoveSpeed = 100.f;
+	float MoveSpeed = 500.f;
 
 	bool isGoingRight; // 0 - Left 1 - Right
 	FVector CurrentTarget;
