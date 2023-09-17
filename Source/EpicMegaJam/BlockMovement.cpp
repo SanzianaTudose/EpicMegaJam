@@ -17,10 +17,14 @@ void UBlockMovement::BeginPlay()
 
 	SetupPlayerInputComponent();
 
+	IsPlaced = false;
 	StartLocation = GetOwner()->GetActorLocation();
+	BlockMesh = GetOwner()->FindComponentByClass<UStaticMeshComponent>();
+	if (BlockMesh == nullptr)
+		UE_LOG(LogTemp, Error, TEXT("UBlockMovement: Static Mesh could not be found on Block."));
+
 	// Sets the first target to left
 	SetNewTarget(LeftRange, 0);
-	isMoving = true;
 
 	DebugDraw(); // DEBUG ONLY! 
 }
@@ -29,16 +33,19 @@ void UBlockMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (isMoving)
+	// Only move Block if it has not been placed yet
+	if (!IsPlaced)
+	{
 		MoveToTarget(DeltaTime);
 
-	// Check if CurrentTarget is reached and switch targets
-	if (CurrentDistance >= TotalDistance)
-	{
-		if (isGoingRight)
-			SetNewTarget(LeftRange, 0);
-		else
-			SetNewTarget(RightRange, 1);
+		// Check if CurrentTarget is reached and switch targets
+		if (CurrentDistance >= TotalDistance)
+		{
+			if (IsGoingRight)
+				SetNewTarget(LeftRange, 0);
+			else
+				SetNewTarget(RightRange, 1);
+		}
 	}
 }
 
@@ -47,13 +54,13 @@ void UBlockMovement::SetupPlayerInputComponent()
 	UInputComponent* InputComponent = GetWorld()->GetFirstPlayerController()->FindComponentByClass<UInputComponent>();
 
 	if (InputComponent != nullptr)
-		InputComponent->BindAction("Block Stop", IE_Pressed, this, &UBlockMovement::StopMovement);
+		InputComponent->BindAction("Block Place", IE_Pressed, this, &UBlockMovement::PlaceBlock);
 }
 
-void UBlockMovement::SetNewTarget(float TargetRange, bool isRight)
+void UBlockMovement::SetNewTarget(float TargetRange, bool IsRight)
 {
 	CurrentTarget = FVector(StartLocation.X, StartLocation.Y + TargetRange, StartLocation.Z);
-	isGoingRight = isRight;
+	IsGoingRight = IsRight;
 
 	Direction = CurrentTarget - StartLocation;
 	TotalDistance = Direction.Size();
@@ -77,9 +84,17 @@ void UBlockMovement::MoveToTarget(float DeltaTime)
 	}
 }
 
-void UBlockMovement::StopMovement()
+void UBlockMovement::PlaceBlock()
 {
-	isMoving = !isMoving;
+	if (IsPlaced) return;
+
+	IsPlaced = !IsPlaced;
+	// Lock Block's X and Y positions
+	BlockMesh->GetBodyInstance()->bLockXTranslation = true;
+	BlockMesh->GetBodyInstance()->bLockYTranslation = true;
+
+	// Enable gravity so that block falls
+	BlockMesh->SetEnableGravity(true);
 }
 
 void UBlockMovement::DebugDraw()

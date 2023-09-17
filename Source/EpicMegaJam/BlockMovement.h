@@ -26,14 +26,18 @@ private:
 
 	void SetupPlayerInputComponent();
 
-	// Movement Methods
-	// {TargetDirection}: 0 - Left 1 - Right
-	void SetNewTarget(float TargetRange, bool isRight);
-	void MoveToTarget(float DeltaTime);
-	void StopMovement(); // Called when Player interacts with block ("Spacebar" press) 
-
 	// Draws debug elements
 	void DebugDraw();
+
+	// Movement Methods
+	// {TargetDirection}: 0 - Left 1 - Right
+	void SetNewTarget(float TargetRange, bool IsRight);
+	void MoveToTarget(float DeltaTime);
+
+	// Interaction State Methods
+	void PlaceBlock(); // Called when Player interacts with block ("Spacebar" press) 
+
+	UStaticMeshComponent* BlockMesh;
 
 	// Movement Variables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
@@ -43,12 +47,14 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float MoveSpeed = 500.f;
 
-	bool isGoingRight; // 0 - Left 1 - Right
+	bool IsGoingRight; // 0 - Left 1 - Right
 	FVector CurrentTarget;
 	FVector Direction;
 	float TotalDistance;
 	float CurrentDistance;
 	FVector StartLocation;
 
-	bool isMoving;
+	// Interaction State Variables
+	bool IsPlaced;
+
 };

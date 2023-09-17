@@ -13,24 +13,17 @@ UBlockSpawner::UBlockSpawner()
 void UBlockSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-
-	SetupPlayerInputComponent();
-}
-
-void UBlockSpawner::SetupPlayerInputComponent()
-{
-	UInputComponent* InputComponent = GetWorld()->GetFirstPlayerController()->FindComponentByClass<UInputComponent>();
-
-	if (InputComponent != nullptr)
-		InputComponent->BindAction("Block Spawn", IE_Pressed, this, &UBlockSpawner::OnBlockSpawnPress);
+	SpawnBlock(); // TODO: delete, for debug
 }
 
 void UBlockSpawner::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// TODO: Check if the current ActiveBlock is placed and if so call SpawnBlock() again
 }
 
-void UBlockSpawner::OnBlockSpawnPress()
+void UBlockSpawner::SpawnBlock()
 {
 	if (ActorToSpawn == nullptr)
 	{

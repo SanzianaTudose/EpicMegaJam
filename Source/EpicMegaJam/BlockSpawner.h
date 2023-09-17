@@ -21,9 +21,7 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	void SetupPlayerInputComponent();
-
-	void OnBlockSpawnPress();
+	void SpawnBlock();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning Properties", meta = (AllowPrivateAccess = "true"));
 	TSubclassOf<AActor> ActorToSpawn;
