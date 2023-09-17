@@ -2,7 +2,6 @@
 
 
 #include "DummyComponent.h"
-#include ""
 
 // Sets default values for this component's properties
 UDummyComponent::UDummyComponent()
