@@ -7,6 +7,7 @@
 #include "Components/InputComponent.h"
 #include "BlockMovement.generated.h"
 
+// Handles entire Block behavior
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class EPICMEGAJAM_API UBlockMovement : public UActorComponent
 {

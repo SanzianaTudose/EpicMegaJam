@@ -47,7 +47,7 @@ void UBlockMovement::SetupPlayerInputComponent()
 	UInputComponent* InputComponent = GetWorld()->GetFirstPlayerController()->FindComponentByClass<UInputComponent>();
 
 	if (InputComponent != nullptr)
-		InputComponent->BindAction("Stop Block", IE_Pressed, this, &UBlockMovement::StopMovement);
+		InputComponent->BindAction("Block Stop", IE_Pressed, this, &UBlockMovement::StopMovement);
 }
 
 void UBlockMovement::SetNewTarget(FVector TargetLocation, bool isRight)
