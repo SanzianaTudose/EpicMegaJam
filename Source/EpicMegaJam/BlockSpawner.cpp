@@ -2,6 +2,7 @@
 
 
 #include "BlockSpawner.h"
+#include "Engine/World.h"
 
 UBlockSpawner::UBlockSpawner()
 {
@@ -13,14 +14,22 @@ UBlockSpawner::UBlockSpawner()
 void UBlockSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	SpawnBlock(); // TODO: delete, for debug
+
+	SpawnBlock();
 }
 
 void UBlockSpawner::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// TODO: Check if the current ActiveBlock is placed and if so call SpawnBlock() again
+	if (BlockMovementComp->IsPlaced && !SpawnQueued)
+	{
+		SpawnQueued = true;
+
+		// Spawn next block with a delay
+		FTimerHandle SpawnDelayTimer;
+		GetWorld()->GetTimerManager().SetTimer(SpawnDelayTimer, this, &UBlockSpawner::SpawnBlock, SpawnDelay, false);
+	}
 }
 
 void UBlockSpawner::SpawnBlock()
@@ -31,7 +40,15 @@ void UBlockSpawner::SpawnBlock()
 		return;
 	}
 
+	SpawnQueued = false;
+
 	ActiveBlock = GetWorld()->SpawnActor<AActor>(ActorToSpawn, SpawnTransform);
+	BlockMovementComp = ActiveBlock->FindComponentByClass<UBlockMovement>();
+
+	if (BlockMovementComp == nullptr)
+		UE_LOG(LogTemp, Error, TEXT("UBlockSpawner: ActiveBlock is null."));
+	if (ActiveBlock == nullptr)
+		UE_LOG(LogTemp, Error, TEXT("UBlockSpawner: UBlockMovement component could not be found on ActiveBlock."));
 }
 
 

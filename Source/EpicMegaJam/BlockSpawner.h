@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "BlockMovement.h"
 #include "BlockSpawner.generated.h"
 
 // Handles spawning Blocks 
@@ -27,7 +28,10 @@ protected:
 	TSubclassOf<AActor> ActorToSpawn;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning Properties", meta = (AllowPrivateAccess = "true"));
 	FTransform SpawnTransform = FTransform(FVector(0.f, 0.f, 800.f));
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning Properties", meta = (AllowPrivateAccess = "true"));
+	float SpawnDelay = 3.f;
 
+	bool SpawnQueued;
 	AActor* ActiveBlock;
-
+	UBlockMovement* BlockMovementComp;
 };

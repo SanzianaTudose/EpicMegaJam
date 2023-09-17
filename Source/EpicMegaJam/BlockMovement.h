@@ -20,6 +20,9 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	// Interaction State Variables
+	bool IsPlaced;
+
 private:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -53,8 +56,4 @@ private:
 	float TotalDistance;
 	float CurrentDistance;
 	FVector StartLocation;
-
-	// Interaction State Variables
-	bool IsPlaced;
-
 };
