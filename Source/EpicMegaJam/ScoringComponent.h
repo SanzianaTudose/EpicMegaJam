@@ -23,6 +23,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	int ScoreBlocks(int exampleBlocks[], int userBlocks[], int numBlocks);
+	UFUNCTION(BlueprintCallable, Category="Scoring Funcs")
+	int ScoreBlocks(TArray<int32> exampleBlocks, TArray<int32> userBlocks);
 		
 };

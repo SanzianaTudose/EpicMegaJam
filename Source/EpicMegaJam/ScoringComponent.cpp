@@ -32,11 +32,12 @@ void UScoringComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 	// ...
 }
 
-int UScoringComponent::ScoreBlocks(int exampleBlocks[], int userBlocks[], int numBlocks)
-{
-	int i, error = 0;
 
-	for(i = 0; i < numBlocks; i++)
+int UScoringComponent::ScoreBlocks(TArray<int32> exampleBlocks, TArray<int32> userBlocks)
+{
+	int error = 0;
+
+	for (int32 i = 0; i != exampleBlocks.Num(); ++i)
 	{
 		int diff = exampleBlocks[i];// - userBlocks[i];
 		diff *= diff;
