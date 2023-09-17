@@ -15,21 +15,35 @@ void UBlockSpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SpawnBlock();
+	SpawnedBlockCount = 0;
+
+	// Set a timer to delay the spawning of the first Block
+	SpawningStarted = false;
+	FTimerHandle InitialSpawnDelayTimer;
+	GetWorld()->GetTimerManager().SetTimer(InitialSpawnDelayTimer, this, &UBlockSpawner::StartSpawningTask, InitialSpawnDelay, false);
 }
 
 void UBlockSpawner::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	// Stay idle if spawning delay is not over yet
+	if (!SpawningStarted) return;
+
 	if (BlockMovementComp->IsPlaced && !SpawnQueued)
 	{
 		SpawnQueued = true;
 
 		// Spawn next block with a delay
-		FTimerHandle SpawnDelayTimer;
-		GetWorld()->GetTimerManager().SetTimer(SpawnDelayTimer, this, &UBlockSpawner::SpawnBlock, SpawnDelay, false);
+		FTimerHandle BlockSpawnDelayTimer;
+		GetWorld()->GetTimerManager().SetTimer(BlockSpawnDelayTimer, this, &UBlockSpawner::SpawnBlock, BlockSpawnDelay, false);
 	}
+}
+
+void UBlockSpawner::StartSpawningTask()
+{
+	SpawnBlock();
+	SpawningStarted = true;
 }
 
 void UBlockSpawner::SpawnBlock()
@@ -40,10 +54,14 @@ void UBlockSpawner::SpawnBlock()
 		return;
 	}
 
+	if (SpawnedBlockCount == PlayerTowerHeight)
+		return; // TODO: Call scoring here (?)
+
 	SpawnQueued = false;
 
 	ActiveBlock = GetWorld()->SpawnActor<AActor>(ActorToSpawn, SpawnTransform);
 	BlockMovementComp = ActiveBlock->FindComponentByClass<UBlockMovement>();
+	SpawnedBlockCount++;
 
 	if (BlockMovementComp == nullptr)
 		UE_LOG(LogTemp, Error, TEXT("UBlockSpawner: ActiveBlock is null."));

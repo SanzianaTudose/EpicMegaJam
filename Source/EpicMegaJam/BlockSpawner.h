@@ -22,6 +22,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	// Is called with a delay in order to wait for the Planned Tower Generation 
+	void StartSpawningTask();
 	void SpawnBlock();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning Properties", meta = (AllowPrivateAccess = "true"));
@@ -29,8 +31,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning Properties", meta = (AllowPrivateAccess = "true"));
 	FTransform SpawnTransform = FTransform(FVector(0.f, 0.f, 800.f));
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning Properties", meta = (AllowPrivateAccess = "true"));
-	float SpawnDelay = 3.f;
+	float BlockSpawnDelay = 3.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning Properties", meta = (AllowPrivateAccess = "true"));
+	float InitialSpawnDelay = 7.f; // Needs to be adjusted depending on how long Planned Tower Generation takes
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawning Properties", meta = (AllowPrivateAccess = "true"));
+	int PlayerTowerHeight = 6; // Needs to be adjusted to match Planned Tower 
 
+	int SpawnedBlockCount;
+	bool SpawningStarted;
 	bool SpawnQueued;
 	AActor* ActiveBlock;
 	UBlockMovement* BlockMovementComp;

@@ -44,9 +44,9 @@ private:
 
 	// Movement Variables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	float LeftRange = -350.f;
+	float LeftRange = -400.f; // Need to match bounds from Generated Tower
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	float RightRange = 350.f;
+	float RightRange = 400.f; // Need to match bounds from Generated Tower
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float MoveSpeed = 500.f;
 
