@@ -7,6 +7,7 @@
 #include "Components/InputComponent.h"
 #include "BlockMovement.generated.h"
 
+// Handles entire Block behavior
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class EPICMEGAJAM_API UBlockMovement : public UActorComponent
 {
@@ -19,35 +20,40 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	// Interaction State Variables
+	bool IsPlaced;
+
 private:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	void SetupPlayerInputComponent();
 
-	// Movement Methods
-	// {TargetDirection}: 0 - Left 1 - Right
-	void SetNewTarget(FVector TargetLocation, bool isRight);
-	void MoveToTarget(float DeltaTime);
-	void StopMovement(); // Called when Player interacts with block ("Spacebar" press) 
-
 	// Draws debug elements
 	void DebugDraw();
 
+	// Movement Methods
+	// {TargetDirection}: 0 - Left 1 - Right
+	void SetNewTarget(float TargetRange, bool IsRight);
+	void MoveToTarget(float DeltaTime);
+
+	// Interaction State Methods
+	void PlaceBlock(); // Called when Player interacts with block ("Spacebar" press) 
+
+	UStaticMeshComponent* BlockMesh;
+
 	// Movement Variables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	FVector LeftTarget = FVector(-100.f, -350.f, 0.f);;
+	float LeftRange = -350.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	FVector RightTarget = FVector(-100.f, 350.f, 0.f);
+	float RightRange = 350.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	float MoveSpeed = 100.f;
+	float MoveSpeed = 500.f;
 
-	bool isGoingRight; // 0 - Left 1 - Right
+	bool IsGoingRight; // 0 - Left 1 - Right
 	FVector CurrentTarget;
 	FVector Direction;
 	float TotalDistance;
 	float CurrentDistance;
 	FVector StartLocation;
-
-	bool isMoving;
 };
