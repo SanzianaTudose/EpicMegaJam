@@ -2,7 +2,7 @@
 
 
 #include "DummyComponent.h"
-
+#include "ScoringComponent.h"
 // Sets default values for this component's properties
 UDummyComponent::UDummyComponent()
 {
@@ -28,7 +28,7 @@ void UDummyComponent::BeginPlay()
 void UDummyComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	
 	// ...
 }
 
