@@ -2,6 +2,7 @@
 
 
 #include "BlockMovement.h"
+#include "DrawDebugHelpers.h"
 
 UBlockMovement::UBlockMovement()
 {
@@ -14,11 +15,10 @@ void UBlockMovement::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetupPlayerInputComponent();
+	// DEBUG ONLY! 
+	DebugDraw();
 
-	// Movement set-up
-	if (LeftTarget == nullptr || RightTarget == nullptr)
-		UE_LOG(LogTemp, Error, TEXT("UBlockMovement target variables are null"));
+	SetupPlayerInputComponent();
 
 	// Sets the first target to left
 	SetNewTarget(LeftTarget, 0);
@@ -35,7 +35,7 @@ void UBlockMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	// Check if CurrentTarget is reached and switch targets
 	if (CurrentDistance >= TotalDistance)
 	{
-		if (CurrentTargetDirection)
+		if (isGoingRight)
 			SetNewTarget(LeftTarget, 0);
 		else
 			SetNewTarget(RightTarget, 1);
@@ -50,13 +50,13 @@ void UBlockMovement::SetupPlayerInputComponent()
 		InputComponent->BindAction("Stop Block", IE_Pressed, this, &UBlockMovement::StopMovement);
 }
 
-void UBlockMovement::SetNewTarget(AActor* Target, bool TargetDirection)
+void UBlockMovement::SetNewTarget(FVector TargetLocation, bool isRight)
 {
-	CurrentTarget = Target;
-	CurrentTargetDirection = TargetDirection;
+	CurrentTarget = TargetLocation;
+	isGoingRight = isRight;
 
 	StartLocation = GetOwner()->GetActorLocation();
-	Direction = Target->GetActorLocation() - StartLocation;
+	Direction = CurrentTarget - StartLocation;
 	TotalDistance = Direction.Size();
 
 	// Normalize Direction
@@ -66,12 +66,6 @@ void UBlockMovement::SetNewTarget(AActor* Target, bool TargetDirection)
 
 void UBlockMovement::MoveToTarget(float DeltaTime)
 {
-	if (CurrentTarget == nullptr)
-	{
-		UE_LOG(LogTemp, Error, TEXT("UBlockMovement: CurrentTarget variable is null."));
-		return;
-	}
-
 	if (CurrentDistance < TotalDistance)
 	{
 		FVector Location = GetOwner()->GetActorLocation();
@@ -87,4 +81,10 @@ void UBlockMovement::MoveToTarget(float DeltaTime)
 void UBlockMovement::StopMovement()
 {
 	isMoving = !isMoving;
+}
+
+void UBlockMovement::DebugDraw()
+{
+	DrawDebugSphere(GetWorld(), LeftTarget, 10, 50, FColor::Green, true);
+	DrawDebugSphere(GetWorld(), RightTarget, 10, 50, FColor::Green, true);
 }
