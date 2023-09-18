@@ -22,6 +22,7 @@ public:
 
 	// Interaction State Variables
 	bool IsPlaced;
+	int PlacedY; // Holds the final Y position of the Block after it's placed 
 
 private:
 	// Called when the game starts
