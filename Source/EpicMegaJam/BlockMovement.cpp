@@ -3,6 +3,7 @@
 
 #include "BlockMovement.h"
 #include "DrawDebugHelpers.h"
+#include "Kismet/GameplayStatics.h"
 
 UBlockMovement::UBlockMovement()
 {
@@ -101,6 +102,9 @@ void UBlockMovement::PlaceBlock()
 
 	// Enable gravity so that block falls
 	BlockMesh->SetEnableGravity(true);
+
+	// Play sound cue
+	UGameplayStatics::PlaySound2D(GetWorld(), PlacedSound);
 }
 
 void UBlockMovement::DebugDraw()
