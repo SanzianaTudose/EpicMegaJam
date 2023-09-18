@@ -36,10 +36,12 @@ void UScoringComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 int UScoringComponent::ScoreBlocks(TArray<int32> exampleBlocks, TArray<int32> userBlocks)
 {
 	int error = 0;
-
+	int examplePrevPos = 0, userPrevPos = 0;
 	for (int32 i = 0; i != exampleBlocks.Num(); ++i)
 	{
-		int diff = exampleBlocks[i];// - userBlocks[i];
+		int exampleDelta = exampleBlocks[i] - examplePrevPos;
+		int userDelta = userBlocks[i] - userPrevPos;
+		int diff = exampleDelta - userDelta;
 		diff *= diff;
 		error += diff;
 	}
