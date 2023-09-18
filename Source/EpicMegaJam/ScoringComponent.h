@@ -24,6 +24,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	UFUNCTION(BlueprintCallable, Category="Scoring Funcs")
-	int ScoreBlocks(TArray<int32> exampleBlocks, TArray<int32> userBlocks);
-		
+	float ScoreBlocks(TArray<int32> exampleBlocks, TArray<int32> userBlocks);
+	UPROPERTY(EditAnywhere)
+	float PenaltyPerUnit = 50.0f;
 };

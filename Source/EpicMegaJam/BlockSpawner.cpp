@@ -21,7 +21,6 @@ void UBlockSpawner::BeginPlay()
 	SpawningStarted = false;
 	FTimerHandle InitialSpawnDelayTimer;
 	GetWorld()->GetTimerManager().SetTimer(InitialSpawnDelayTimer, this, &UBlockSpawner::StartSpawningTask, InitialSpawnDelay, false);
-	GetWorld()->GetFirstPlayerController()->GetPawn()->SetTowerBuilder(&this);
 }
 
 void UBlockSpawner::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
