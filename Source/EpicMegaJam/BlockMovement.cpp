@@ -4,20 +4,12 @@
 #include "BlockMovement.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
-#include "UObject/ConstructorHelpers.h"
 
 UBlockMovement::UBlockMovement()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// Initialize sound cue
-	TCHAR* PlacedSoundPath = L"SoundCue'/Game/Sounds/block_placed_Cue.block_placed_Cue'";
-	auto SoundCueLoader = ConstructorHelpers::FObjectFinder<USoundBase>(PlacedSoundPath);
-	PlacedSound = SoundCueLoader.Object;
-	if (PlacedSound == nullptr)
-		UE_LOG(LogTemp, Error, TEXT("UBlockMovement: Placed Sound Cue could not be found."));
 }
 
 void UBlockMovement::BeginPlay()
@@ -32,7 +24,7 @@ void UBlockMovement::BeginPlay()
 	StartLocation = GetOwner()->GetActorLocation();
 	BlockMesh = GetOwner()->FindComponentByClass<UStaticMeshComponent>();
 	if (BlockMesh == nullptr)
-		UE_LOG(LogTemp, Error, TEXT("UBlockMovement: Static Mesh of Block could not be found."));
+		UE_LOG(LogTemp, Error, TEXT("UBlockMovement: Static Mesh could not be found on Block."));
 
 	// Sets the first target to left
 	SetNewTarget(LeftRange, 0);

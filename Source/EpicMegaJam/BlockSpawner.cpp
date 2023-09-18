@@ -56,8 +56,10 @@ void UBlockSpawner::SpawnBlock()
 		return;
 	}
 
-	if (SpawnedBlockCount == PlayerTowerHeight)
-		return; // TODO: Call scoring here (?)
+	if (SpawnedBlockCount >= PlayerTowerHeight){
+		isGameOver = true;
+		return;
+	}
 
 	SpawnQueued = false;
 
