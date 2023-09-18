@@ -32,6 +32,8 @@ void UBlockSpawner::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 	if (BlockMovementComp->IsPlaced && !SpawnQueued)
 	{
+		PlayerBlocksPositions.Add(BlockMovementComp->PlacedY);
+
 		SpawnQueued = true;
 
 		// Spawn next block with a delay

@@ -18,6 +18,8 @@ public:
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	TArray<int32> PlayerBlocksPositions; // After all Blocks are spawned, it holds their final Y values (for scoring)
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

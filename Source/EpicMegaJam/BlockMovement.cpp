@@ -18,6 +18,8 @@ void UBlockMovement::BeginPlay()
 	SetupPlayerInputComponent();
 
 	IsPlaced = false;
+	PlacedY = -1.f;
+
 	StartLocation = GetOwner()->GetActorLocation();
 	BlockMesh = GetOwner()->FindComponentByClass<UStaticMeshComponent>();
 	if (BlockMesh == nullptr)
@@ -92,6 +94,10 @@ void UBlockMovement::PlaceBlock()
 	// Lock Block's X and Y positions
 	BlockMesh->GetBodyInstance()->bLockXTranslation = true;
 	BlockMesh->GetBodyInstance()->bLockYTranslation = true;
+
+	// Keep track of Y position
+	FVector Location = GetOwner()->GetActorLocation();
+	PlacedY = (int)Location.Y; // TODO: Consider changing it to float => change in NewPawn as well
 
 	// Enable gravity so that block falls
 	BlockMesh->SetEnableGravity(true);
