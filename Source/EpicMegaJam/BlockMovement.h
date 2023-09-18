@@ -42,6 +42,8 @@ private:
 	void PlaceBlock(); // Called when Player interacts with block ("Spacebar" press) 
 
 	UStaticMeshComponent* BlockMesh;
+	UPROPERTY(EditAnywhere, Category = "Interaction")
+	USoundBase* PlacedSound;
 
 	// Movement Variables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
